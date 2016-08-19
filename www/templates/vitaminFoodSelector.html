@@ -1,0 +1,17 @@
+<ion-modal-view ng-controller="CaloryCounterCtrl as vmKcal">
+  <ion-header-bar>
+    <h1 class="title">Your Personal Details</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeModal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form ng-submit="submitPersonalDetails()">
+      <div class="list" ng-repeat="vitaminFood in vmKcal.getSmaken()">
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">{{vitaminFood.title}}</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

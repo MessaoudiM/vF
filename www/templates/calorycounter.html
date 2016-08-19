@@ -1,0 +1,59 @@
+<ion-view view-title="Calory Counter">
+  <ion-content ng-controller="CaloryCounterCtrl as vmKcal">
+    <form ng-submit="doSubmit()">
+      <div class="list">
+        <!--<label class="item item-input">-->
+          <!--<span class="input-label">Smaak</span>-->
+          <!--<input type="text" ng-model="smaken.title">-->
+        <!--</label>-->
+        <!--<ion-label>Kies je smaak</ion-label>-->
+        <!--<ion-item>-->
+          <!--<p>{{smaakje}}</p>>-->
+          <!--<select ng-model="smaakje" ng-options="smaak.title for smaak in smaken">-->
+          <!--</select>-->
+          <!--<ion-select>-->
+            <!--<ion-option>-->
+              <!--optie 1-->
+            <!--</ion-option>-->
+            <!--<ion-option>-->
+              <!--optie 2-->
+            <!--</ion-option>-->
+          <!--</ion-select>-->
+        <!--</ion-item>-->
+
+        <!--<ion-item>-->
+          <!--<ion-label>Gender</ion-label>-->
+          <!--<ion-select [(ngModel)]="gender">-->
+            <!--<ion-option value="f" selected="true">Female</ion-option>-->
+            <!--<ion-option value="m">Male</ion-option>-->
+          <!--</ion-select>-->
+        <!--</ion-item>-->
+
+        <!--<label class="item item-input">-->
+          <!--<span class="input-label">Aantal Scoops</span>-->
+          <!--<input type="number" ng-model="scoopAantal">-->
+        <!--</label>-->
+      <!--<p>vmKcal: {{vmKcal.test1}}</p>-->
+      <!--<p>$scope: {{test2}}</p>-->
+      <!--<p>vm.$scope: {{vmKcal.test2}}</p>-->
+        <label class="item" ng-hide="vmKcal.public.hiddenButton.firstTime">
+          <!--<button class="button button-block button-positive" ng-click="vmKcal.public.enterPersonalDetails()">It seems to be your first time. If you enter some info about yourself we can calculate how much calories a day you need.</button>-->
+          <button class="button button-block button-positive" ng-click="login()">It seems to be your first time. If you enter some info about yourself we can calculate how much calories a day you need.</button>
+        </label>
+        <label class="item" ng-hide="vmKcal.public.hiddenButton.enterKcals">
+          <button class="button button-block button-positive" ng-click="vmKcal.public.enterKcals()">Do you want to enter your kcals</button>
+        </label>
+      <!--<label class="item" ng-hide="vmKcal.public.hiddenButton.vitaminFood">-->
+        <label class="item" ng-hide="vmKcal.public.hiddenButton.vitaminFood">
+        <button class="button button-block button-positive" ng-click="vmKcal.public.selectVitaminFood()">Choose your flavour VitaminFood</button>
+      </label>
+
+      <!--<label class="item" ng-hide="vmKcal.public.hiddenButton.scoops">-->
+      <label class="item" ng-hide="vmKcal.public.getHiddenButtonScoops.scoops">
+        <button class="button button-block button-positive" ng-click="vmKcal.public.selectNumberOfScoops()">Choose the number of Scoops</button>
+      </label>
+      </div>
+    </form>
+    <!--<ion-item>{{}}</ion-item>-->
+  </ion-content>
+</ion-view>

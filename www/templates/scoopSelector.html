@@ -1,0 +1,41 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Select the number of scoops</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeModal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form ng-submit="submitPersonalDetails()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Age</span>
+          <input type="number" ng-model="personalDetails.age">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Sex</span>
+          <input type="text" ng-model="personalDetails.sex">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Length</span>
+          <input type="number" ng-model="personalDetails.length">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Weight</span>
+          <input type="number" ng-model="personalDetails.weight">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Activity Level</span>
+          <input type="number" ng-model="personalDetails.activityLevel">
+        </label>
+        <!--<label class="item item-input">-->
+        <!--<span class="input-label">Password</span>-->
+        <!--<input type="password" ng-model="loginData.password">-->
+        <!--</label>-->
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Submit</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>
