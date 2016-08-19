@@ -57,117 +57,59 @@ angular.module('starter.controllers', ['starter.factories'])
   $scope.id = $stateParams.playlistId - 1;
 })
 
-.controller('CaloryCounterCtrl', function($scope, $ionicModal, $timeout, KcalCounter, VitaminFoodSelector, ScoopSelector) {
+.controller('CaloryCounterCtrl', function($scope, $ionicModal, $timeout, KcalCounter, VitaminFoodSelector, ScoopSelector, BMRCalculator) {
 
-  // Form data for the login modal
-  $scope.personalDetails = {
-    sex: true,
-    age: 25,
-    weight: 80,
-    length: 175,
-    activitylevel: 2
-  };
-
-  var calculateBMR = function () {
-    var sexFactorMale = 10;
-    var sexFactorFemale = 7;
-    var sexFactor, BMR;
-    if(sex === "male"){
-      sexFactor = sexFactorMale;
-    }
-    else {
-      sexFactor = sexFactorFemale;
-    }
-    BMR = (sexFactor * $scope.personalDetails.weight)+(1*$scope.personalDetails.length)
-  };
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/personalDetails.html', {
-  // $ionicModal.fromTemplateUrl('templates/vitaminFoodSelector.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeModal = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    console.log('open');
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.submitPersonalDetails = function() {
-    console.log('Submitting personal details: ', $scope.personalDetails);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeModal();
-    }, 1000);
-  };
-
-  //common use object literal //public properties within the scope of this controller and their public getters/setters
-  var common = {
-    vitaminFoodSelectedIndex: 0,
-    scoopsSelected: 3,
-    kcalLeftForTheDay: 2500,
-    kcalUndoStore: 0,
-    firstTime: true,
-    hiddenButton: {
-      // firstTime: !common.getFirstTime(),
-      // firstTime: !common.firstTime,
-      firstTime: false,
-      enterKcals: false,
-      vitaminFood: true,
-      scoops: true
-    },
-    getFirstTime: function () {
-      return this.firstTime;
-    },
-    setFirstTime: function (bool) {
-      this.firstTime = bool;
-    },
-    setVitaminFoodSelectedIndex: function (index) {
-      this.vitaminFoodSelectedIndex = index;
-    },
-    getVitaminFoodSelectedIndex: function () {
-      return this.vitaminFoodSelectedIndex;
-    },
-    setScoopsSelected: function (index) {
-      this.scoopsSelected = index + 1;
-    },
-    getScoopsSelected: function () {
-      return this.scoopsSelected;
-    },
-    getKcalLeftForTheDay: function () {
-      return this.kcalLeftForTheDay;
-    },
-    setKcalLeftForTheDay: function (kcals) {
-      this.kcalLeftForTheDay = kcals;
-    },
-    setHiddenButton: function (hiddenButtonPropertyString, isHidden) {
-      if (hiddenButtonPropertyString === "enterKcals"){
-        this.hiddenButton.enterKcals = isHidden;
-      }
-      else if(hiddenButtonPropertyString === "vitaminFood"){
-       this.hiddenButton.vitaminFood = isHidden;
-      }
-      else if (hiddenButtonPropertyString === "scoops"){
-        this.hiddenButton.scoops = isHidden;
-      }
-      else if (hiddenButtonPropertyString === "firstTime"){
-        this.hiddenButton.firstTime = isHidden;
-      }
-    },
-    getHiddenButton: function () {
-      return this.hiddenButton;
-    }
-  };
+  // // Form data for the login modal
+  // $scope.personalDetails = {
+  //   sex: true,
+  //   age: 25,
+  //   weight: 80,
+  //   length: 175,
+  //   activitylevel: 2
+  // };
+  //
+  // var calculateBMR = function () {
+  //   var sexFactorMale = 10;
+  //   var sexFactorFemale = 7;
+  //   var sexFactor, BMR;
+  //   if(sex === "male"){
+  //     sexFactor = sexFactorMale;
+  //   }
+  //   else {
+  //     sexFactor = sexFactorFemale;
+  //   }
+  //   BMR = (sexFactor * $scope.personalDetails.weight)+(1*$scope.personalDetails.length)
+  // };
+  //
+  // // Create the login modal that we will use later
+  // $ionicModal.fromTemplateUrl('templates/personalDetails.html', {
+  // // $ionicModal.fromTemplateUrl('templates/vitaminFoodSelector.html', {
+  //   scope: $scope
+  // }).then(function(modal) {
+  //   $scope.modal = modal;
+  // });
+  //
+  // // Triggered in the login modal to close it
+  // $scope.closeModal = function() {
+  //   $scope.modal.hide();
+  // };
+  //
+  // // Open the login modal
+  // $scope.calculateBMR = function() {
+  //   console.log('open');
+  //   $scope.modal.show();
+  // };
+  //
+  // // Perform the login action when the user submits the login form
+  // $scope.submitPersonalDetails = function() {
+  //   console.log('Submitting personal details: ', $scope.personalDetails);
+  //
+  //   // Simulate a login delay. Remove this and replace with your login
+  //   // code if using a login system
+  //   $timeout(function() {
+  //     $scope.closeModal();
+  //   }, 1000);
+  // };
 
   var main = function () {
     // var vf = vitaminFood();
@@ -201,146 +143,6 @@ angular.module('starter.controllers', ['starter.factories'])
     }
   };
 
-  //function returning objects
-//   var vitaminFood = function () {
-//     var privateObject = {
-//       smaken: [
-//         {title: 'Vanilla', kcalPerScoop: 100},
-//         {title: 'Chocolat', kcalPerScoop: 200},
-//         {title: 'Strawberry', kcalPerScoop: 300},
-//         {title: 'Apple', kcalPerScoop: 50},
-//         {title: 'Chicken', kcalPerScoop: 400}
-//       ],
-//       selectVitaminFood: function () {
-//         var hideSheet = $ionicActionSheet.show({
-//           buttons: privateObject.populateButtonsWithSmaken(),
-//           titleText: 'Choose your VitaminFood',
-//           cancelText: 'Return to previous screen',
-//           cancel: function () {
-//           },
-//           buttonClicked: function (index) {
-//             common.setVitaminFoodSelectedIndex(index);
-//             console.log(privateObject.getSelectedSmaak() + " " + privateObject.getSelectedKcalPerScoop());
-//             common.setHiddenButton("vitaminFood", true);
-//             common.setHiddenButton("scoops", false);
-//             console.log(KcalCounter.testFactory);
-//             console.log(VitaminFoodSelector.testFactory);
-//             return true;
-//           }
-//         });
-//       },
-//       populateButtonsWithSmaken: function () {
-//         var buttonsArray = [];
-//         var populateButtonsArray = function (element, index, array) {
-//           buttonsArray.push({text: element.title});
-//         };
-//         this.smaken.forEach(populateButtonsArray);
-//         return buttonsArray;
-//       },
-//       getSelectedSmaak: function () {
-//         console.log(common.getVitaminFoodSelectedIndex());
-//         return this.smaken[common.getVitaminFoodSelectedIndex()].title;
-//       },
-//       getSelectedKcalPerScoop: function () {
-//         return privateObject.smaken[common.getVitaminFoodSelectedIndex()].kcalPerScoop;
-//       },
-//       getSmaken: function () {
-//         return privateObject.smaken;
-//       }
-//     };
-//
-//     return {
-//       getSmaken: privateObject.getSmaken,
-//       selectVitaminFood: privateObject.selectVitaminFood, //called from exporter
-//       getSelectedKcalPerScoop: privateObject.getSelectedKcalPerScoop //called from scoop
-//     };
-//   }
-//
-//   var scoops = function () {
-//     var privateObject = {
-//       maxNumberOfScoops: 10,
-//       selectNumberOfScoops: function () {
-//         var hideSheet = $ionicActionSheet.show({
-//           buttons: privateObject.populateButtonsWithScoops(),
-//           titleText: 'Choose the Number of Scoops you had',
-//           cancelText: 'Return to previous screen',
-//           cancel: function () {
-//           },
-//           buttonClicked: function (index) {
-//             common.setScoopsSelected(index);
-//             console.log(common.getScoopsSelected() + " scoop(s)");
-//             kcalCalculator().calculateKcalsLeft();
-//             common.setHiddenButton("scoops", true);
-//             common.setHiddenButton("enterKcals", false);
-//             return true;
-//           }
-//         });
-//       },
-//       populateButtonsWithScoops: function () {
-//         var buttonsArray = [];
-//         var maxScoops = this.getMaxNumberOfScoops();
-//         for (var i = 1; i <= maxScoops; i++) {
-//           var buttonText;
-//           if (i == 1) {
-//             buttonText = i + " scoop";
-//           }
-//           else {
-//             buttonText = i + " scoops";
-//           }
-//           buttonsArray.push({text: buttonText});
-//         }
-//         return buttonsArray;
-//       },
-//       getMaxNumberOfScoops: function () {
-//         return this.maxNumberOfScoops;
-//       }
-//     };
-//     return {
-//       selectNumberOfScoops: privateObject.selectNumberOfScoops // called from exporter
-//     };
-// };
-
-  // var kcalCalculator = function () {
-  //   var privateObject = {
-  //     calculateKcalsLeft: function () {
-  //       console.log(common.getKcalLeftForTheDay());
-  //       console.log("vitaminFood().getSelectedKcalPerScoop(): " + vitaminFood().getSelectedKcalPerScoop());
-  //       var calculatedKcals = common.getKcalLeftForTheDay() - vitaminFood().getSelectedKcalPerScoop() * common.getScoopsSelected();
-  //       common.setKcalLeftForTheDay(calculatedKcals);
-  //       console.log("common.getKcalLeftForTheDay(): " + common.getKcalLeftForTheDay());
-  //     }
-  //   };
-  //   return {
-  //     calculateKcalsLeft: privateObject.calculateKcalsLeft
-  //   };
-  // };
-  // var testFunctions = (function () {
-  //   var abc = "success";
-  //
-  //   var privateObj = {
-  //     publicFunctionX: function () {
-  //         console.log("public facing interface:1 " + abc)
-  //     },
-  //     privateFunctionX: function () {
-  //         console.log("private: " + abc)
-  //     }
-  //   };
-  //   // var publicFunction = function () {
-  //   //   console.log("public facing interface: " + abc)
-  //   // };
-  //   //
-  //   // function privateFunction() {
-  //   //   console.log("private: " + abc)
-  //   // }
-  //   var _this = {
-  //     publicFunction: function(){
-  //       console.log("pub: " + abc)
-  //     }
-  //   };
-  //     return _this;
-  //
-  // })();
-
   //viewModel
   var vmKcal = this;
   vmKcal.public = {
@@ -349,9 +151,10 @@ angular.module('starter.controllers', ['starter.factories'])
     getSmaken: VitaminFoodSelector.getSmaken,
     selectVitaminFood: VitaminFoodSelector.selectVitaminFood,
     selectNumberOfScoops: ScoopSelector.selectNumberOfScoops,
-    hiddenButton: common.getHiddenButton(),
+    // hiddenButton: common.getHiddenButton(),
     isHiddenButtonScoops: ScoopSelector.isHiddenButton,
-    getHiddenButtonScoops: ScoopSelector.getHiddenButton
+    getHiddenButtonScoops: ScoopSelector.getHiddenButton,
+    calculateBMR: BMRCalculator.calculateBMR
   };
 });
 
@@ -1195,3 +998,152 @@ angular.module('starter.controllers', ['starter.factories'])
 //   hiddenButton: common.getHiddenButton(),
 // };
 //
+
+
+//// -------------------------------------------------------------------- 6
+//    REFACTORING CONTROLLER INTO FACTORIES
+//
+//
+// .controller('CaloryCounterCtrl', function($scope, $ionicModal, $timeout, KcalCounter, VitaminFoodSelector, ScoopSelector) {
+//
+//   // Form data for the login modal
+//   $scope.personalDetails = {
+//     sex: true,
+//     age: 25,
+//     weight: 80,
+//     length: 175,
+//     activitylevel: 2
+//   };
+//
+//   var calculateBMR = function () {
+//     var sexFactorMale = 10;
+//     var sexFactorFemale = 7;
+//     var sexFactor, BMR;
+//     if(sex === "male"){
+//       sexFactor = sexFactorMale;
+//     }
+//     else {
+//       sexFactor = sexFactorFemale;
+//     }
+//     BMR = (sexFactor * $scope.personalDetails.weight)+(1*$scope.personalDetails.length)
+//   };
+//
+//   // Create the login modal that we will use later
+//   $ionicModal.fromTemplateUrl('templates/personalDetails.html', {
+//     // $ionicModal.fromTemplateUrl('templates/vitaminFoodSelector.html', {
+//     scope: $scope
+//   }).then(function(modal) {
+//     $scope.modal = modal;
+//   });
+//
+//   // Triggered in the login modal to close it
+//   $scope.closeModal = function() {
+//     $scope.modal.hide();
+//   };
+//
+//   // Open the login modal
+//   $scope.login = function() {
+//     console.log('open');
+//     $scope.modal.show();
+//   };
+//
+//   // Perform the login action when the user submits the login form
+//   $scope.submitPersonalDetails = function() {
+//     console.log('Submitting personal details: ', $scope.personalDetails);
+//
+//     // Simulate a login delay. Remove this and replace with your login
+//     // code if using a login system
+//     $timeout(function() {
+//       $scope.closeModal();
+//     }, 1000);
+//   };
+//
+//   //common use object literal //public properties within the scope of this controller and their public getters/setters
+//   var common = {
+//     vitaminFoodSelectedIndex: 0,
+//     scoopsSelected: 3,
+//     kcalLeftForTheDay: 2500,
+//     kcalUndoStore: 0,
+//     firstTime: true,
+//     hiddenButton: {
+//       // firstTime: !common.getFirstTime(),
+//       // firstTime: !common.firstTime,
+//       firstTime: false,
+//       enterKcals: false,
+//       vitaminFood: true,
+//       scoops: true
+//     },
+//     getFirstTime: function () {
+//       return this.firstTime;
+//     },
+//     setFirstTime: function (bool) {
+//       this.firstTime = bool;
+//     },
+//     setVitaminFoodSelectedIndex: function (index) {
+//       this.vitaminFoodSelectedIndex = index;
+//     },
+//     getVitaminFoodSelectedIndex: function () {
+//       return this.vitaminFoodSelectedIndex;
+//     },
+//     setScoopsSelected: function (index) {
+//       this.scoopsSelected = index + 1;
+//     },
+//     getScoopsSelected: function () {
+//       return this.scoopsSelected;
+//     },
+//     getKcalLeftForTheDay: function () {
+//       return this.kcalLeftForTheDay;
+//     },
+//     setKcalLeftForTheDay: function (kcals) {
+//       this.kcalLeftForTheDay = kcals;
+//     },
+//     setHiddenButton: function (hiddenButtonPropertyString, isHidden) {
+//       if (hiddenButtonPropertyString === "enterKcals"){
+//         this.hiddenButton.enterKcals = isHidden;
+//       }
+//       else if(hiddenButtonPropertyString === "vitaminFood"){
+//         this.hiddenButton.vitaminFood = isHidden;
+//       }
+//       else if (hiddenButtonPropertyString === "scoops"){
+//         this.hiddenButton.scoops = isHidden;
+//       }
+//       else if (hiddenButtonPropertyString === "firstTime"){
+//         this.hiddenButton.firstTime = isHidden;
+//       }
+//     },
+//     getHiddenButton: function () {
+//       return this.hiddenButton;
+//     }
+//   };
+//
+//   var main = function () {
+//     // var vf = vitaminFood();
+//     // var sc = scoops();
+//     function enterPersonalDetails() {
+//       // common.setHiddenButton("firstTime", true)
+//       // personalInfo().presentForm;
+//       console.log("before Getfirsttime: " + common.getFirstTime());
+//       common.setFirstTime(false);
+//       console.log("after Getfirsttime: " + common.getFirstTime());
+//       console.log("before firstTIme hiddenbutton: "+ common.hiddenButton.firstTime);
+//       common.setHiddenButton("firstTime", true);
+//       console.log("after firstTIme hiddenbutton: "+ common.hiddenButton.firstTime);
+//       personalDetails().startForm();
+//     }
+//
+//     function enterKcals() {
+//       common.setHiddenButton("enterKcals", true);
+//       common.setHiddenButton("vitaminFood", false);
+//     }
+//
+//     return {
+//       enterKcals: enterKcals,
+//       enterPersonalDetails: enterPersonalDetails
+//     };
+//   };
+//
+//   var personalDetails = function () {
+//     function startForm() {
+//
+//     }
+//   };

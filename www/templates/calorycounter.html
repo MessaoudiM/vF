@@ -38,7 +38,7 @@
       <!--<p>vm.$scope: {{vmKcal.test2}}</p>-->
         <label class="item" ng-hide="vmKcal.public.hiddenButton.firstTime">
           <!--<button class="button button-block button-positive" ng-click="vmKcal.public.enterPersonalDetails()">It seems to be your first time. If you enter some info about yourself we can calculate how much calories a day you need.</button>-->
-          <button class="button button-block button-positive" ng-click="login()">It seems to be your first time. If you enter some info about yourself we can calculate how much calories a day you need.</button>
+          <button class="button button-block button-positive" ng-click="vmKcal.public.calculateBMR()">It seems to be your first time. If you enter some info about yourself we can calculate how much calories a day you need.</button>
         </label>
         <label class="item" ng-hide="vmKcal.public.hiddenButton.enterKcals">
           <button class="button button-block button-positive" ng-click="vmKcal.public.enterKcals()">Do you want to enter your kcals</button>
