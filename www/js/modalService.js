@@ -13,6 +13,7 @@
         }).then(function (modal) {
             service.modal = modal;
             service.modal.show();
+            // return true;
         });
       };
 

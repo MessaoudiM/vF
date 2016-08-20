@@ -1,5 +1,7 @@
 /**
  * Created by mm on 11/08/16.
+ *
+ *  DELETE FILE
  */
 angular.module('starter.factories', [])
   // .factory('KcalCounter', function(){

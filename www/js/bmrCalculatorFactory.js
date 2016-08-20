@@ -3,22 +3,16 @@
  */
 // (function () {
   angular.module('starter.factories')
-    .factory('BMRCalculator', function (modalService) {
+    .factory('BMRCalculator', function (modalService, $timeout, $q, PersonalDetails) {
 
-      // Form data for the login modal
-      var personalDetails = {
-        sex: true,
-        age: 25,
-        weight: 80,
-        length: 175,
-        activitylevel: 2
-      };
+      var BMR =null;
 
       var calculateBMR = function () {
         console.log('calculateBMR');
         var sexFactorMale = 10;
         var sexFactorFemale = 7;
-        var sexFactor, BMR;
+        var sexFactor;
+        var personalDetails = PersonalDetails.getPersonalDetails();
         if(personalDetails.sex === "male"){
           sexFactor = sexFactorMale;
         }
@@ -28,42 +22,49 @@
         BMR = (sexFactor * personalDetails.weight)+(1 * personalDetails.length)
       };
 
-      // // Create the login modal that we will use later
-      // $ionicModal.fromTemplateUrl('templates/personalDetails.html', {
-      //   // $ionicModal.fromTemplateUrl('templates/vitaminFoodSelector.html', {
-      //   scope: this
-      // }).then(function(modal) {
-      //   this.modal = modal;
-      // });
-      //
-      // // Triggered in the login modal to close it
-      // this.closeModal = function() {
-      //   this.modal.hide();
+      // ORIGINAL METHOD
+      // var enterPersonalDetails = function () {
+      //   PersonalDetails.openModal();
+      //   calculateBMR();
+      //   console.log(BMR);
       // };
 
-      // Open the login modal
-      var openModal = function() {
-        console.log('open');
-        // this.modal.show();
-        this.modal = modalService;
+      // PROMISE/DEFERRED
+      var enterPersonalDetails = function () {
+        return $q(function (resolve, reject) {
+          setTimeout(function () {
+            console.log(BMR);
 
-        this.modal.showModal('templates/personalDetails.html');
-      };
+            if(BMR === null){
+              console.log('bmr null');
+            }
+            else {
+              console.log('bmr NOT null');
+            }
+          }, 1000);
+        });
+        //     if(PersonalDetails.openModal()){
+        //
+        //     }
+        //     else {
+        //
+        //     }
+        //   }, 1000);
+        // });
 
-      // Perform the login action when the user submits the login form
-      var submitPersonalDetails = function() {
-        console.log('Submitting personal details: ', this.personalDetails);
+        var promise = enterPersonalDetails();
 
-        // Simulate a login delay. Remove this and replace with your login
-        // code if using a login system
-        $timeout(function() {
-          this.closeModal();
-        }, 1000);
+        promise.then(function (success) {
+          calculateBMR();
+          console.log(BMR);
+          console.log('success: ', success);
+        }, function (error) {
+          console.log('error: ', error);
+        });
       };
 
       return {
-        // showModal: modalService.show
-        calculateBMR: openModal
+        calculateBMR: enterPersonalDetails
       };
     });
 // })();

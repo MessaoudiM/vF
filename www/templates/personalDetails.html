@@ -6,35 +6,35 @@
   <!--</ion-content>-->
 <!--</ion-view>-->
 
-<ion-modal-view>
+<ion-modal-view ng-controller="PersonalDetailsCtrl as vm">
   <ion-header-bar>
     <h1 class="title">Your Personal Details</h1>
     <div class="buttons">
-      <button class="button button-clear" ng-click="closeModal()">Close</button>
+      <button class="button button-clear" ng-click="vm.closeModal()">Close</button>
     </div>
   </ion-header-bar>
   <ion-content>
-    <form ng-submit="submitPersonalDetails()">
+    <form ng-submit="vm.submitPersonalDetails(vm.personalDetails)">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Age</span>
-          <input type="number" ng-model="personalDetails.age">
+          <input type="number" ng-model="vm.personalDetails.age">
         </label>
         <label class="item item-input">
           <span class="input-label">Sex</span>
-          <input type="text" ng-model="personalDetails.sex">
+          <input type="text" ng-model="vm.personalDetails.sex">
         </label>
         <label class="item item-input">
           <span class="input-label">Length</span>
-          <input type="number" ng-model="personalDetails.length">
+          <input type="number" ng-model="vm.personalDetails.length">
         </label>
         <label class="item item-input">
           <span class="input-label">Weight</span>
-          <input type="number" ng-model="personalDetails.weight">
+          <input type="number" ng-model="vm.personalDetails.weight">
         </label>
         <label class="item item-input">
           <span class="input-label">Activity Level</span>
-          <input type="number" ng-model="personalDetails.activityLevel">
+          <input type="number" ng-model="vm.personalDetails.activityLevel">
         </label>
         <!--<label class="item item-input">-->
           <!--<span class="input-label">Password</span>-->

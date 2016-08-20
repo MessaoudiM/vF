@@ -37,7 +37,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     views: {
       'menuContent': {
         templateUrl: 'templates/calorycounter.html',
-        controller: 'CaloryCounterCtrl'
+        controller: 'CaloryCounterCtrl as vmKcal'
       }
     }
   })
